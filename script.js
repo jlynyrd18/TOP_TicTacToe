@@ -1,12 +1,12 @@
 console.log("Type `startGame()` to start");
-function drawBoard(round, board) {
+function drawBoard(round, gameboard) {
   console.group(`Score after round ${round}`);
   console.log("");
-  console.log((board["1"] || '1') + " | " + (board["2"] || ' 2 ') + " | " + (board["3"] || ' 3 '));
+  console.log((gameboard.board[0][0] || '1') + " | " + (gameboard.board[0][1] || ' 2 ') + " | " + (gameboard.board[0][2] || ' 3 '));
   console.log("--------------");
-  console.log((board["4"] || '4') + " | " + (board["5"] || ' 5 ') + " | " + (board["6"] || ' 6 '));
+  console.log((gameboard.board[1][0] || '4') + " | " + (gameboard.board[1][1] || ' 5 ') + " | " + (gameboard.board[1][2] || ' 6 '));
   console.log("--------------");
-  console.log((board["7"] || '7') + " | " + (board["8"] || ' 8 ') + " | " + (board["9"] || ' 9 '));
+  console.log((gameboard.board[2][0] || '7') + " | " + (gameboard.board[2][1] || ' 8 ') + " | " + (gameboard.board[2][2] || ' 9 '));
   console.groundEnd;
 }
 
@@ -31,16 +31,64 @@ function startGame() {
       [null, null, null]
     ]
   }
-  drawBoard(0, gameboard);
+  drawBoard(1, gameboard);
 
   //playthrough logic
-  for(let i = 1; i < 9; i++) {
+  for(let i = 1; i <= 9; i++) {
     let round = i;
-    let choice = prompt("Pick a number to put your symbol 1-9");
-    if (choice > 1 || choice < 9) {
-      prompt("Invalid number please pick a number between 1 and 9.");
-    }else if (choice === NaN) {
-      prompt("That is not a number try again 1-9");
+    const player1Turn = () => {
+      let choice = prompt(`${players.player1.title} pick a number to put your symbol 1-9`);
+      let number = parseInt(choice);
+  
+      //get row of board
+      let row = 0;
+      if (number <= 3) {
+        row = 0;
+      }else if (number >= 4 && number <= 6) {
+        row = 1;
+      }else {
+        row = 2;
+      }
+  
+      //square of row
+      if (number <= 3) {
+        number = number - 1;
+      }else if (number >= 4 && number <= 6) {
+        number = number - 4;
+      }else {
+        number = number - 7;
+      }
+  
+      gameboard.board[row][number] = players.player1.symbol;
+      drawBoard(round, gameboard);
+    }
+
+    const player2Turn = () => {
+      let choice = prompt(`${players.player2.title} pick a number to put your symbol 1-9`);
+      let number = parseInt(choice);
+  
+      //get row of board
+      let row = 0;
+      if (number <= 3) {
+        row = 0;
+      }else if (number >= 4 && number <= 6) {
+        row = 1;
+      }else {
+        row = 2;
+      }
+  
+      //square of row
+      if (number <= 3) {
+        number = number - 1;
+      }else if (number >= 4 && number <= 6) {
+        number = number - 4;
+      }else {
+        number = number - 7;
+      }
+  
+      gameboard.board[row][number] = players.player2.symbol;
+      drawBoard(round, gameboard);
     }
   }
 }
+//still need check square for player symbol and reject if one there as well as winning conditions
