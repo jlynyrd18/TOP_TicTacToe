@@ -39,6 +39,7 @@ function startGame() {
     if (turnCounter % 2 !== 0) {
       let choice = prompt(`${players.player1.title} pick a number to put your symbol 1-9`);
       let number = parseInt(choice);
+      //need way to go back to prompt if anything other than 1-9 is entered
       let row = 0;
 
       if (number <= 3) {
@@ -61,6 +62,10 @@ function startGame() {
       gameboard.board[row][number] = players.player1.symbol;
       drawBoard(turnCounter, gameboard);
       turnCounter++;
+
+      if (turnCounter >= 5) {
+        solutions(players.player1.title);
+      }
 
     }else if (turnCounter % 2 === 0) {
       let choice = prompt(`${players.player2.title} pick a number to put your symbol 1-9`);
@@ -85,20 +90,39 @@ function startGame() {
       gameboard.board[row][number] = players.player2.symbol;
       drawBoard(turnCounter, gameboard);
       turnCounter++;
+
+      if (turnCounter >= 5) {
+        solutions(players.player2.title);
+      }
     }
   }
-  solutions();
-  function solutions() {
+  //solutions not working atm try saving row to var like all left row [0][0], [1][0], [2][0] is in var left column?
+  function solutions(title) {
     let p1Symbol = players.player1.symbol;
     let p2Symbol = players.player2.symbol;
-    if (gameboard.board[0][0] && gameboard.board[0][3] && gameboard.board[0][6] === p1Symbol){
-      console.log("Player 1 wins this round");
+    //column check
+    if (gameboard.board[0][0] && gameboard.board[1][0] && gameboard.board[2][0] === p1Symbol || p2Symbol){
+      console.log(`${title} wins this round`);
+    }else if (gameboard.board[0][1] && gameboard.board[1][1] && gameboard.board[2][1] === p1Symbol || p2Symbol) {
+      console.log(`${title} wins this round`);
+    }else if (gameboard.board[0][2] && gameboard.board[1][2] && gameboard.board[2][2] === p1Symbol || p2Symbol) {
+      console.log(`${title} wins this round`);
+    }
+    //row check
+    else if (gameboard.board[0][0] && gameboard.board[0][1] && gameboard.board[0][2] === p1Symbol || p2Symbol) {
+      console.log(`${title} wins this round`);
+    }else if (gameboard.board[1][0] && gameboard.board[1][1] && gameboard.board[1][2] === p1Symbol || p2Symbol) {
+      console.log(`${title} wins this round`);
+    }else if (gameboard.board[2][0] && gameboard.board[2][1] && gameboard.board[2][2] === p1Symbol || p2Symbol) {
+      console.log(`${title} wins this round`);
+    }
+    //diagnol check
+    else if(gameboard.board[0][0] && gameboard.board[1][1] && gameboard.board[2][2] === p1Symbol || p2Symbol) {
+      console.log(`${title} wins this round`);
+    }else if (gameboard.board[0][2] && gameboard.board[1][1] && gameboard.board[2][0] === p1Symbol || p2Symbol) {
+      console.log(`${title} wins this round`);
     }else{
-      console.log("Draw try again");
+      return;
     }
   }
 }
-
-//function checkForSymbol (gameboard.board[row][number]) if a symbol is there alert spot taken and call players turn to start again
-
-//still need check square for player symbol and reject if one there as well as winning conditions
