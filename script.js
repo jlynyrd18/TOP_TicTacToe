@@ -96,31 +96,44 @@ function startGame() {
       }
     }
   }
-  //solutions not working atm try saving row to var like all left row [0][0], [1][0], [2][0] is in var left column?
+  
   function solutions(title) {
-    let p1Symbol = players.player1.symbol;
-    let p2Symbol = players.player2.symbol;
+    let symbol;
+    if(title === players.player1.title) {
+      symbol = players.player1.symbol;
+    }else {
+      symbol = players.player2.symbol;
+    }
+    
     //column check
-    if (gameboard.board[0][0] && gameboard.board[1][0] && gameboard.board[2][0] === p1Symbol || p2Symbol){
+    if (gameboard.board[0][0] === symbol && gameboard.board[1][0] === symbol && gameboard.board[2][0] === symbol){
       console.log(`${title} wins this round`);
-    }else if (gameboard.board[0][1] && gameboard.board[1][1] && gameboard.board[2][1] === p1Symbol || p2Symbol) {
+      return;
+    }else if (gameboard.board[0][1] === symbol && gameboard.board[1][1] === symbol && gameboard.board[2][1] === symbol) {
       console.log(`${title} wins this round`);
-    }else if (gameboard.board[0][2] && gameboard.board[1][2] && gameboard.board[2][2] === p1Symbol || p2Symbol) {
+      return;
+    }else if (gameboard.board[0][2] === symbol && gameboard.board[1][2] === symbol && gameboard.board[2][2] === symbol) {
       console.log(`${title} wins this round`);
+      return;
     }
     //row check
-    else if (gameboard.board[0][0] && gameboard.board[0][1] && gameboard.board[0][2] === p1Symbol || p2Symbol) {
+    else if (gameboard.board[0][0] === symbol && gameboard.board[0][1] === symbol && gameboard.board[0][2] === symbol) {
       console.log(`${title} wins this round`);
-    }else if (gameboard.board[1][0] && gameboard.board[1][1] && gameboard.board[1][2] === p1Symbol || p2Symbol) {
+      return;
+    }else if (gameboard.board[1][0] === symbol && gameboard.board[1][1] === symbol && gameboard.board[1][2] === symbol) {
       console.log(`${title} wins this round`);
-    }else if (gameboard.board[2][0] && gameboard.board[2][1] && gameboard.board[2][2] === p1Symbol || p2Symbol) {
+      return;
+    }else if (gameboard.board[2][0] === symbol && gameboard.board[2][1] === symbol && gameboard.board[2][2] === symbol) {
       console.log(`${title} wins this round`);
+      return;
     }
     //diagnol check
-    else if(gameboard.board[0][0] && gameboard.board[1][1] && gameboard.board[2][2] === p1Symbol || p2Symbol) {
+    else if(gameboard.board[0][0] === symbol && gameboard.board[1][1] === symbol && gameboard.board[2][2] === symbol) {
       console.log(`${title} wins this round`);
-    }else if (gameboard.board[0][2] && gameboard.board[1][1] && gameboard.board[2][0] === p1Symbol || p2Symbol) {
+      return;
+    }else if (gameboard.board[0][2] === symbol && gameboard.board[1][1] === symbol && gameboard.board[2][0] === symbol) {
       console.log(`${title} wins this round`);
+      return;
     }else{
       return;
     }
