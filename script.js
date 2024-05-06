@@ -35,6 +35,7 @@ function startGame() {
 
   //playthrough logic
   let turnCounter = 1;
+  let winner = "";
   while(turnCounter <= 9) {
     if (turnCounter % 2 !== 0) {
       let choice = prompt(`${players.player1.title} pick a number to put your symbol 1-9`);
@@ -61,11 +62,16 @@ function startGame() {
       
       gameboard.board[row][number] = players.player1.symbol;
       drawBoard(turnCounter, gameboard);
-      turnCounter++;
 
       if (turnCounter >= 5) {
         solutions(players.player1.title);
       }
+      if(winner === players.player1.title) {
+        break;
+      }else if (turnCounter === 9) {
+        console.log("The game ended in a tie");
+      }
+      turnCounter++;
 
     }else if (turnCounter % 2 === 0) {
       let choice = prompt(`${players.player2.title} pick a number to put your symbol 1-9`);
@@ -89,11 +95,14 @@ function startGame() {
       }
       gameboard.board[row][number] = players.player2.symbol;
       drawBoard(turnCounter, gameboard);
-      turnCounter++;
 
       if (turnCounter >= 5) {
         solutions(players.player2.title);
       }
+      if(winner === players.player2.title) {
+        break;
+      }
+      turnCounter++;
     }
   }
   
@@ -108,31 +117,39 @@ function startGame() {
     //column check
     if (gameboard.board[0][0] === symbol && gameboard.board[1][0] === symbol && gameboard.board[2][0] === symbol){
       console.log(`${title} wins this round`);
+      winner = title;
       return;
     }else if (gameboard.board[0][1] === symbol && gameboard.board[1][1] === symbol && gameboard.board[2][1] === symbol) {
       console.log(`${title} wins this round`);
+      winner = title;
       return;
     }else if (gameboard.board[0][2] === symbol && gameboard.board[1][2] === symbol && gameboard.board[2][2] === symbol) {
       console.log(`${title} wins this round`);
+      winner = title;
       return;
     }
     //row check
     else if (gameboard.board[0][0] === symbol && gameboard.board[0][1] === symbol && gameboard.board[0][2] === symbol) {
       console.log(`${title} wins this round`);
+      winner = title;
       return;
     }else if (gameboard.board[1][0] === symbol && gameboard.board[1][1] === symbol && gameboard.board[1][2] === symbol) {
       console.log(`${title} wins this round`);
+      winner = title;
       return;
     }else if (gameboard.board[2][0] === symbol && gameboard.board[2][1] === symbol && gameboard.board[2][2] === symbol) {
       console.log(`${title} wins this round`);
+      winner = title;
       return;
     }
     //diagnol check
     else if(gameboard.board[0][0] === symbol && gameboard.board[1][1] === symbol && gameboard.board[2][2] === symbol) {
       console.log(`${title} wins this round`);
+      winner = title;
       return;
     }else if (gameboard.board[0][2] === symbol && gameboard.board[1][1] === symbol && gameboard.board[2][0] === symbol) {
       console.log(`${title} wins this round`);
+      winner = title;
       return;
     }else{
       return;
