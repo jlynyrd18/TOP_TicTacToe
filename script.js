@@ -59,77 +59,9 @@ function startGame() {
   player2Name.textContent = players.player2.title;
 
   //playthrough logic
-  // let turnCounter = 1;
-  // let winner = "";
-  // while(turnCounter <= 9) {
-  //   if (turnCounter % 2 !== 0) {
-  //     let choice = prompt(`${players.player1.title} pick a number to put your symbol 1-9`);
-  //     let number = parseInt(choice);
-  //     //need way to go back to prompt if anything other than 1-9 is entered
-  //     let row = 0;
+  let turnCounter = 1;
+  let winner = "";
 
-  //     if (number <= 3) {
-  //       row = 0;
-  //     }else if (number >= 4 && number <= 6) {
-  //       row = 1;
-  //     }else {
-  //       row = 2;
-  //     }
-        
-  //     //square of row
-  //     if (number <= 3) {
-  //       number = number - 1;
-  //     }else if (number >= 4 && number <= 6) {
-  //       number = number - 4;
-  //     }else {
-  //       number = number - 7;
-  //     }
-      
-  //     gameboard.board[row][number] = players.player1.symbol;
-  //     drawBoard(turnCounter, gameboard);
-
-  //     if (turnCounter >= 5) {
-  //       solutions(players.player1.title);
-  //     }
-  //     if(winner === players.player1.title) {
-  //       break;
-  //     }else if (turnCounter === 9) {
-  //       console.log("The game ended in a tie");
-  //     }
-  //     turnCounter++;
-
-  //   }else if (turnCounter % 2 === 0) {
-  //     let choice = prompt(`${players.player2.title} pick a number to put your symbol 1-9`);
-  //     let number = parseInt(choice);
-  //     let row = 0;
-  //     if (number <= 3) {
-  //       row = 0;
-  //     }else if (number >= 4 && number <= 6) {
-  //       row = 1;
-  //     }else {
-  //       row = 2;
-  //     }
-        
-  //     //square of row
-  //     if (number <= 3) {
-  //       number = number - 1;
-  //     }else if (number >= 4 && number <= 6) {
-  //       number = number - 4;
-  //     }else {
-  //       number = number - 7;
-  //     }
-  //     gameboard.board[row][number] = players.player2.symbol;
-  //     drawBoard(turnCounter, gameboard);
-
-  //     if (turnCounter >= 5) {
-  //       solutions(players.player2.title);
-  //     }
-  //     if(winner === players.player2.title) {
-  //       break;
-  //     }
-  //     turnCounter++;
-  //   }
-  // }
   
   function solutions(title) {
     let symbol;
