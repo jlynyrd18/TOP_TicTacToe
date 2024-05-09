@@ -59,9 +59,12 @@ function startGame() {
   player2Name.textContent = players.player2.title;
 
   //playthrough logic
-  let turnCounter = 1;
-  let winner = "";
+  const cells = document.querySelectorAll('.cell');
+  cells.forEach(cell => {
+    cell.addEventListener("click", () => {
 
+    })
+  })
   
   function solutions(title) {
     let symbol;
