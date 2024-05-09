@@ -2,6 +2,14 @@ body{
     text-align: center;
 }
 
+h3{
+    font-size: 53px;
+}
+
+h4{
+    font-size: 53px;
+}
+
 .container{
     display: flex;
     justify-content: center;
@@ -10,9 +18,20 @@ body{
 }
 
 .board{
-    height: 500px;
-    width: 500px;
-    background-color: lightgray;
+    display: flex;
+    flex-direction: column;
+}
+
+.row{
+    display: flex;
+}
+
+.cell{
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+    display: flex;
+
 }
 
 #buttons{
