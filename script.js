@@ -1,14 +1,23 @@
-console.log("Type `startGame()` to start");
-function drawBoard(turnCounter, gameboard) {
-  console.group(`Score after round ${turnCounter}`);
-  console.log("");
-  console.log((gameboard.board[0][0] || ' 1 ') + " | " + (gameboard.board[0][1] || ' 2 ') + " | " + (gameboard.board[0][2] || ' 3 '));
-  console.log("--------------");
-  console.log((gameboard.board[1][0] || ' 4 ') + " | " + (gameboard.board[1][1] || ' 5 ') + " | " + (gameboard.board[1][2] || ' 6 '));
-  console.log("--------------");
-  console.log((gameboard.board[2][0] || ' 7 ') + " | " + (gameboard.board[2][1] || ' 8 ') + " | " + (gameboard.board[2][2] || ' 9 '));
-  console.groundEnd;
-}
+// console.log("Type `startGame()` to start");
+// function drawBoard(turnCounter, gameboard) {
+//   console.group(`Score after round ${turnCounter}`);
+//   console.log("");
+//   console.log((gameboard.board[0][0] || ' 1 ') + " | " + (gameboard.board[0][1] || ' 2 ') + " | " + (gameboard.board[0][2] || ' 3 '));
+//   console.log("--------------");
+//   console.log((gameboard.board[1][0] || ' 4 ') + " | " + (gameboard.board[1][1] || ' 5 ') + " | " + (gameboard.board[1][2] || ' 6 '));
+//   console.log("--------------");
+//   console.log((gameboard.board[2][0] || ' 7 ') + " | " + (gameboard.board[2][1] || ' 8 ') + " | " + (gameboard.board[2][2] || ' 9 '));
+//   console.groundEnd;
+// }
+const container = document.getElementById("container");
+const player1Name = document.getElementById("player1-name");
+const player1Wins = document.getElementById("round-won1");
+const board = document.getElementById("board");
+const player2Name = document.getElementById("player2-name");
+const player2Wins = document.getElementById("rounds-won2");
+const startBtn = document.getElementById("start-button");
+
+startBtn.addEventListener("click", startGame());
 
 
 //start game and get names
@@ -31,80 +40,96 @@ function startGame() {
       [null, null, null]
     ]
   }
-  drawBoard(0, gameboard);
+  //create game board first the row then the cell
+  gameboard.board.forEach((rowData, rowIndex) => {
+    const rowDiv = document.createElement('div');
+    rowDiv.classList.add('row');
+
+    rowData.forEach((cellData, columnIndex) => {
+      const cellDiv = document.createElement('div');
+      cellDiv.classList.add('cell');
+      cellDiv.textContent = cellData !== null ? cellData : '';
+
+      rowDiv.appendChild(cellDiv);
+    })
+    board.appendChild(rowDiv);
+  })
+  
+  player1Name.textContent = players.player1.title;
+  player2Name.textContent = players.player2.title;
 
   //playthrough logic
-  let turnCounter = 1;
-  let winner = "";
-  while(turnCounter <= 9) {
-    if (turnCounter % 2 !== 0) {
-      let choice = prompt(`${players.player1.title} pick a number to put your symbol 1-9`);
-      let number = parseInt(choice);
-      //need way to go back to prompt if anything other than 1-9 is entered
-      let row = 0;
+  // let turnCounter = 1;
+  // let winner = "";
+  // while(turnCounter <= 9) {
+  //   if (turnCounter % 2 !== 0) {
+  //     let choice = prompt(`${players.player1.title} pick a number to put your symbol 1-9`);
+  //     let number = parseInt(choice);
+  //     //need way to go back to prompt if anything other than 1-9 is entered
+  //     let row = 0;
 
-      if (number <= 3) {
-        row = 0;
-      }else if (number >= 4 && number <= 6) {
-        row = 1;
-      }else {
-        row = 2;
-      }
+  //     if (number <= 3) {
+  //       row = 0;
+  //     }else if (number >= 4 && number <= 6) {
+  //       row = 1;
+  //     }else {
+  //       row = 2;
+  //     }
         
-      //square of row
-      if (number <= 3) {
-        number = number - 1;
-      }else if (number >= 4 && number <= 6) {
-        number = number - 4;
-      }else {
-        number = number - 7;
-      }
+  //     //square of row
+  //     if (number <= 3) {
+  //       number = number - 1;
+  //     }else if (number >= 4 && number <= 6) {
+  //       number = number - 4;
+  //     }else {
+  //       number = number - 7;
+  //     }
       
-      gameboard.board[row][number] = players.player1.symbol;
-      drawBoard(turnCounter, gameboard);
+  //     gameboard.board[row][number] = players.player1.symbol;
+  //     drawBoard(turnCounter, gameboard);
 
-      if (turnCounter >= 5) {
-        solutions(players.player1.title);
-      }
-      if(winner === players.player1.title) {
-        break;
-      }else if (turnCounter === 9) {
-        console.log("The game ended in a tie");
-      }
-      turnCounter++;
+  //     if (turnCounter >= 5) {
+  //       solutions(players.player1.title);
+  //     }
+  //     if(winner === players.player1.title) {
+  //       break;
+  //     }else if (turnCounter === 9) {
+  //       console.log("The game ended in a tie");
+  //     }
+  //     turnCounter++;
 
-    }else if (turnCounter % 2 === 0) {
-      let choice = prompt(`${players.player2.title} pick a number to put your symbol 1-9`);
-      let number = parseInt(choice);
-      let row = 0;
-      if (number <= 3) {
-        row = 0;
-      }else if (number >= 4 && number <= 6) {
-        row = 1;
-      }else {
-        row = 2;
-      }
+  //   }else if (turnCounter % 2 === 0) {
+  //     let choice = prompt(`${players.player2.title} pick a number to put your symbol 1-9`);
+  //     let number = parseInt(choice);
+  //     let row = 0;
+  //     if (number <= 3) {
+  //       row = 0;
+  //     }else if (number >= 4 && number <= 6) {
+  //       row = 1;
+  //     }else {
+  //       row = 2;
+  //     }
         
-      //square of row
-      if (number <= 3) {
-        number = number - 1;
-      }else if (number >= 4 && number <= 6) {
-        number = number - 4;
-      }else {
-        number = number - 7;
-      }
-      gameboard.board[row][number] = players.player2.symbol;
-      drawBoard(turnCounter, gameboard);
+  //     //square of row
+  //     if (number <= 3) {
+  //       number = number - 1;
+  //     }else if (number >= 4 && number <= 6) {
+  //       number = number - 4;
+  //     }else {
+  //       number = number - 7;
+  //     }
+  //     gameboard.board[row][number] = players.player2.symbol;
+  //     drawBoard(turnCounter, gameboard);
 
-      if (turnCounter >= 5) {
-        solutions(players.player2.title);
-      }
-      if(winner === players.player2.title) {
-        break;
-      }
-      turnCounter++;
-    }
-  }
+  //     if (turnCounter >= 5) {
+  //       solutions(players.player2.title);
+  //     }
+  //     if(winner === players.player2.title) {
+  //       break;
+  //     }
+  //     turnCounter++;
+  //   }
+  // }
   
   function solutions(title) {
     let symbol;
