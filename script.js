@@ -16,6 +16,7 @@ const board = document.getElementById("board");
 const player2Name = document.getElementById("player2-name");
 const player2Wins = document.getElementById("rounds-won2");
 const startBtn = document.getElementById("start-button");
+const announce = document.getElementById("announcement");
 
 startBtn.addEventListener("click", startGame());
 
@@ -58,14 +59,40 @@ function startGame() {
   player1Name.textContent = players.player1.title;
   player2Name.textContent = players.player2.title;
 
-  //playthrough logic
   const cells = document.querySelectorAll('.cell');
   cells.forEach(cell => {
     cell.addEventListener("click", () => {
-
+      playThrough(cell);
     })
   })
-  
+
+    //playthrough logic
+  function playThrough(cell) {
+    let playerPick = cell.textContent;
+    let turnCounter = 1;
+    while(turnCounter <= 9){
+      if(turnCounter % 2 !== 0) {
+        announce.textContent = `${players.player1.title}'s turn with ${players.player1.symbol}`;
+      }else {
+        announce.textContent = `${players.player2.title}'s turn with ${players.player2.symbol}`;
+      }
+
+    if(playerPick === players.player1.symbol || playerPick === players.player2.symbol) {
+      alert("This spot is already taken. Please choose a different spot");
+      return;
+    }
+    if (playerPick === "") {
+      if(turnCounter % 2 !== 0) {
+        playerPick = players.player1.symbol;
+      }else {
+        playerPick = players.player2.symbol;
+      }
+    }
+    turnCounter++;
+  }
+}
+
+
   function solutions(title) {
     let symbol;
     if(title === players.player1.title) {
