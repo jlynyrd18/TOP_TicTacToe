@@ -18,7 +18,10 @@ const player2Wins = document.getElementById("rounds-won2");
 const startBtn = document.getElementById("start-button");
 const announce = document.getElementById("announcement");
 
-startBtn.addEventListener("click", startGame);
+startBtn.addEventListener("click", () => {
+  board.innerHTML = '';
+  startGame();
+});
 
 
 //start game and get names
@@ -63,6 +66,7 @@ function startGame() {
   let currentPlayer = players.player1;
 
   //playthrough logic
+  let turnCounter = 0;
   cells.forEach(cell => {
     cell.addEventListener("click", () => {
       if (cell.textContent.trim() !== '') {
@@ -70,6 +74,16 @@ function startGame() {
         return;
       }
       cell.textContent = currentPlayer.symbol;
+      turnCounter++;
+      if (turnCounter >= 5) {
+        if (turnCounter >= 6 && solutions()) {
+          announce.textContent = `${currentPlayer.title} wins!`;
+          return;
+        }else if(turnCounter === 9) {
+          announce.textContent = "It's a draw!";
+          return;
+        }
+      }
       currentPlayer = (currentPlayer === players.player1) ? players.player2 : players.player1;
       announce.textContent = `${currentPlayer.title}'s turn with ${currentPlayer.symbol}`;
     })
