@@ -18,7 +18,7 @@ const player2Wins = document.getElementById("rounds-won2");
 const startBtn = document.getElementById("start-button");
 const announce = document.getElementById("announcement");
 
-startBtn.addEventListener("click", startGame());
+startBtn.addEventListener("click", startGame);
 
 
 //start game and get names
@@ -60,38 +60,20 @@ function startGame() {
   player2Name.textContent = players.player2.title;
 
   const cells = document.querySelectorAll('.cell');
+  let currentPlayer = players.player1;
+
+  //playthrough logic
   cells.forEach(cell => {
     cell.addEventListener("click", () => {
-      playThrough(cell);
+      if (cell.textContent.trim() !== '') {
+        alert("Someone has chosen that spot already. Choose a new one");
+        return;
+      }
+      cell.textContent = currentPlayer.symbol;
+      currentPlayer = (currentPlayer === players.player1) ? players.player2 : players.player1;
+      announce.textContent = `${currentPlayer.title}'s turn with ${currentPlayer.symbol}`;
     })
   })
-
-    //playthrough logic
-  function playThrough(cell) {
-    let playerPick = cell.textContent;
-    let turnCounter = 1;
-    while(turnCounter <= 9){
-      if(turnCounter % 2 !== 0) {
-        announce.textContent = `${players.player1.title}'s turn with ${players.player1.symbol}`;
-      }else {
-        announce.textContent = `${players.player2.title}'s turn with ${players.player2.symbol}`;
-      }
-
-    if(playerPick === players.player1.symbol || playerPick === players.player2.symbol) {
-      alert("This spot is already taken. Please choose a different spot");
-      return;
-    }
-    if (playerPick === "") {
-      if(turnCounter % 2 !== 0) {
-        playerPick = players.player1.symbol;
-      }else {
-        playerPick = players.player2.symbol;
-      }
-    }
-    turnCounter++;
-  }
-}
-
 
   function solutions(title) {
     let symbol;
