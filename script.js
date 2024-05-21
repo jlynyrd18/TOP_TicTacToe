@@ -45,14 +45,17 @@ function startGame() {
     ]
   }
   //create game board first the row then the cell
-  gameboard.board.forEach((rowData, rowIndex) => {
+  let cellId = 1;
+  gameboard.board.forEach((rowData) => {
     const rowDiv = document.createElement('div');
     rowDiv.classList.add('row');
 
-    rowData.forEach((cellData, columnIndex) => {
+    rowData.forEach((cellData) => {
       const cellDiv = document.createElement('div');
       cellDiv.classList.add('cell');
       cellDiv.textContent = cellData !== null ? cellData : '';
+      cellDiv.id = `cell-${cellId}`;
+      cellId++;
 
       rowDiv.appendChild(cellDiv);
     })
@@ -76,7 +79,7 @@ function startGame() {
       cell.textContent = currentPlayer.symbol;
       turnCounter++;
       if (turnCounter >= 5) {
-        if (turnCounter >= 6 && solutions()) {
+        if (turnCounter >= 6 && solutions(currentPlayer.symbol)) {
           announce.textContent = `${currentPlayer.title} wins!`;
           return;
         }else if(turnCounter === 9) {
@@ -89,53 +92,39 @@ function startGame() {
     })
   })
 
-  function solutions(title) {
-    let symbol;
-    if(title === players.player1.title) {
-      symbol = players.player1.symbol;
-    }else {
-      symbol = players.player2.symbol;
-    }
+  function solutions(symbol) {
+    // each cell has an id use that to track for solutions
+    const cell1 = document.getElementById("cell-1");
+    const cell2 = document.getElementById("cell-2");
+    const cell3 = document.getElementById("cell-3");
+    const cell4 = document.getElementById("cell-4");
+    const cell5 = document.getElementById("cell-5");
+    const cell6 = document.getElementById("cell-6");
+    const cell7 = document.getElementById("cell-7");
+    const cell8 = document.getElementById("cell-8");
+    const cell9 = document.getElementById("cell-9");
+    console.log(cell1);
+  
+    if ((cell1.textContent === symbol && cell2.textContent === symbol && cell3.textContent === symbol) ||
+          (cell4.textContent === symbol && cell5.textContent === symbol && cell6.textContent === symbol) ||
+          (cell7.textContent === symbol && cell8.textContent === symbol && cell9.textContent === symbol)) {
+        return true;
+      }
+
+      // Check columns
+      if ((cell1.textContent === symbol && cell4.textContent === symbol && cell7.textContent === symbol) ||
+          (cell2.textContent === symbol && cell5.textContent === symbol && cell8.textContent === symbol) ||
+          (cell3.textContent === symbol && cell6.textContent === symbol && cell9.textContent === symbol)) {
+        return true;
+      }
+
+      // Check diagonals
+      if ((cell1.textContent === symbol && cell5.textContent === symbol && cell9.textContent === symbol) ||
+          (cell3.textContent === symbol && cell5.textContent === symbol && cell7.textContent === symbol)) {
+        return true;
+      }
+
+      return false;
     
-    //column check
-    if (gameboard.board[0][0] === symbol && gameboard.board[1][0] === symbol && gameboard.board[2][0] === symbol){
-      console.log(`${title} wins this round`);
-      winner = title;
-      return;
-    }else if (gameboard.board[0][1] === symbol && gameboard.board[1][1] === symbol && gameboard.board[2][1] === symbol) {
-      console.log(`${title} wins this round`);
-      winner = title;
-      return;
-    }else if (gameboard.board[0][2] === symbol && gameboard.board[1][2] === symbol && gameboard.board[2][2] === symbol) {
-      console.log(`${title} wins this round`);
-      winner = title;
-      return;
-    }
-    //row check
-    else if (gameboard.board[0][0] === symbol && gameboard.board[0][1] === symbol && gameboard.board[0][2] === symbol) {
-      console.log(`${title} wins this round`);
-      winner = title;
-      return;
-    }else if (gameboard.board[1][0] === symbol && gameboard.board[1][1] === symbol && gameboard.board[1][2] === symbol) {
-      console.log(`${title} wins this round`);
-      winner = title;
-      return;
-    }else if (gameboard.board[2][0] === symbol && gameboard.board[2][1] === symbol && gameboard.board[2][2] === symbol) {
-      console.log(`${title} wins this round`);
-      winner = title;
-      return;
-    }
-    //diagnol check
-    else if(gameboard.board[0][0] === symbol && gameboard.board[1][1] === symbol && gameboard.board[2][2] === symbol) {
-      console.log(`${title} wins this round`);
-      winner = title;
-      return;
-    }else if (gameboard.board[0][2] === symbol && gameboard.board[1][1] === symbol && gameboard.board[2][0] === symbol) {
-      console.log(`${title} wins this round`);
-      winner = title;
-      return;
-    }else{
-      return;
-    }
   }
 }
