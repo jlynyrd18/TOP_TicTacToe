@@ -70,20 +70,26 @@ function startGame() {
 
   //playthrough logic
   let turnCounter = 0;
+  let gameActive = true;
   cells.forEach(cell => {
     cell.addEventListener("click", () => {
+      if(!gameActive){
+        return;
+      }
       if (cell.textContent.trim() !== '') {
         alert("Someone has chosen that spot already. Choose a new one");
         return;
       }
       cell.textContent = currentPlayer.symbol;
       turnCounter++;
-      if (turnCounter >= 5) {
-        if (turnCounter >= 6 && solutions(currentPlayer.symbol)) {
+      if (turnCounter >= 5 ) {
+        if (turnCounter >= 5 && solutions(currentPlayer.symbol)) {
           announce.textContent = `${currentPlayer.title} wins!`;
+          gameActive = false;
           return;
         }else if(turnCounter === 9) {
           announce.textContent = "It's a draw!";
+          gameActive = false;
           return;
         }
       }
@@ -91,6 +97,8 @@ function startGame() {
       announce.textContent = `${currentPlayer.title}'s turn with ${currentPlayer.symbol}`;
     })
   })
+
+  //game still run after winner 
 
   function solutions(symbol) {
     // each cell has an id use that to track for solutions
@@ -103,7 +111,6 @@ function startGame() {
     const cell7 = document.getElementById("cell-7");
     const cell8 = document.getElementById("cell-8");
     const cell9 = document.getElementById("cell-9");
-    console.log(cell1);
   
     if ((cell1.textContent === symbol && cell2.textContent === symbol && cell3.textContent === symbol) ||
           (cell4.textContent === symbol && cell5.textContent === symbol && cell6.textContent === symbol) ||
